@@ -43,6 +43,11 @@ public class Vehicule {
     public String getCarb(){
         return carb;
     }
+
+    public int[] getMod() {
+        return mod;
+    }
+
     public void lecture() {
 
         System.out.println("enter le nom :");

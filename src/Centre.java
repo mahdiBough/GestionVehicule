@@ -1,3 +1,8 @@
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.time.LocalDateTime;
+
 public class Centre {
     private int max;
     private int nbe;
@@ -88,6 +93,46 @@ public class Centre {
 
         }
         return prix;
+    }
+
+    public Vehicule[] supprime_vehicules(){
+
+        Vehicule [] vehiculesSupprimer = new Vehicule[nbe];
+        int j = 0;
+        int i = 0;
+        while( i < nbe && vehicules[i]!=null) {
+
+            int[] matricule = vehicules[i].getMod();
+            int d = matricule[0]-21;
+            int m = matricule[1]-11;
+            int y = matricule[2]-2016;
+           if(y>20 && m>0 && d>0){
+
+              vehiculesSupprimer[j] = vehicules[i] ;
+              vehicules[i] = null;
+              nbe--;
+              j++;
+           }
+
+
+        }
+
+        return vehiculesSupprimer;
+    }
+    public int fichier_vehicule(String[] im){
+
+        int pos = rechercheVehicule(im);
+        Vehicule v =vehicules[pos];
+        String ch = v.getMat()+"|"+v.getNom()+"|"+v.getMod()+"|"+v.getCarb()+"|"+v.getCin()+"|"+v.getFiscale();
+        try{
+            BufferedWriter writer = new BufferedWriter(new FileWriter("./cache/VehiculesEnreg.txt"));
+            writer.write(ch);
+            writer.close();
+            return 1;
+
+        }
+        catch (IOException e){ e.printStackTrace();}
+        return 0;
     }
 
 }
